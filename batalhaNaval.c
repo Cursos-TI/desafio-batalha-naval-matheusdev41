@@ -1,18 +1,21 @@
 #include <stdio.h>
 
 int main() {
-    // Coordenadas Fixas Navios  
-    int x1 = 1;
-    int x2 = 2;
+    // Declaração de tabuleiro 5x5
+    int tabuleiro[5][5];
+    int contador = 1;
 
-    char tabuleiro[5][5] = {
-       {1, 2, 3, 4, 5},
-       {6, 7, 8, 9, 10},
-       {11, 12, 13, 14, 15},
-       {16, 17, 18, 19, 20},
-       {21, 22, 23, 24, 25} 
-    };
-    
+    // Inicializa o tabuleiro numerado de 1 a 25
+    for( int i = 0; i < 5, i++){
+        for(int j = 0; j < 5; j++){
+            tabuleiro[i][j] = contador++;
+        }
+    }
+
+     // Coordenadas dos navios 
+    int x1 = 1; // Linha inicial navio 1
+    int x2 = 2; // Linha inicial navio 2 
+
     printf("------------------ NAVIL 1 ------------------\n");
     for(int i = 1, j = 1; i < 4; i++, j++){
         printf("Parte %d do navio 1 posicionado na casa %d \n",
