@@ -6,7 +6,7 @@ int main() {
     int contador = 1;
 
     // Inicializa o tabuleiro numerado de 1 a 25
-    for( int i = 0; i < 5, i++){
+    for( int i = 0; i < 5; i++){
         for(int j = 0; j < 5; j++){
             tabuleiro[i][j] = contador++;
         }
