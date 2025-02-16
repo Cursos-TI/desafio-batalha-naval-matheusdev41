@@ -47,7 +47,7 @@ int main() {
         // Posicionamento do navio 3 no tabuleiro
         if(i == 2){
             for (int j = 0; j < 3; j++){
-                // Certifica que a coluna não passe dos limites do tabuleiro
+                // Certifica que o navio não passe dos limites do tabuleiro
                 if((inicioNavioY[i] + j < colunas) && (inicioNavioX[i] + j < linhas)){
                     tabuleiro[inicioNavioX[i] + j][inicioNavioY[i] + j] = 3;
                 }
@@ -58,7 +58,7 @@ int main() {
         // Posicionamento do navio 4 no tabuleiro
         if(i == 3){
             for(int j = 0; j < 3; j++){
-                // Certifica que a coluna não passe dos linites do tabuleiro
+                // Certifica que o navio não passe dos linites do tabuleiro
                 if((inicioNavioY[i] + j < colunas) && (inicioNavioX[i] + j < linhas)){
                     tabuleiro[inicioNavioX[i] + j][inicioNavioY[i] + j] = 3;
                 }
