@@ -1,33 +1,80 @@
 #include <stdio.h>
 
+#define linhas 10
+#define colunas 10
+
 int main() {
-    // Declaração de tabuleiro 5x5
-    int tabuleiro[5][5];
-    int contador = 1;
 
-    // Inicializa o tabuleiro numerado de 1 a 25
-    for( int i = 0; i < 5; i++){
-        for(int j = 0; j < 5; j++){
-            tabuleiro[i][j] = contador++;
+    // Coordenadas navios
+    // Os dois primeiros navios são na horizontal
+    // Já os outros dois navios são na diagonal
+    int inicioNavioX[4] = {0, 2, 3, 4}; 
+    int inicioNavioY[4] = {2, 2, 1, 5};
+
+    // Declaração do tabuleiro 
+    int tabuleiro[linhas][colunas];
+
+    // Inicialização do tabuleiro com 0
+    for (int i = 0; i < linhas; i++){
+        for(int j = 0; j < colunas; j++){
+            tabuleiro[i][j] = 0;
+        }   
+    }
+
+    // Posiciona navio1 horizontal
+    for (int i = 0; i < 4; i++) { // Percorre todo vetor inicioNavioX
+
+        // Posicionamento do navio 1 no tabuleiro
+        if(i == 0){
+            for (int j = 0; j < 3; j++){
+                // Certifica que o navio não passe dos limites do tabuleiro
+                if(inicioNavioY[i] + j < colunas){
+                    tabuleiro[inicioNavioX[i]][inicioNavioY[i] + j] = 3;
+                }
+            }
         }
+
+        // Posicionamento do navio 2 no tabuleiro
+        if(i == 1){
+            for (int j = 0; j < 3; j++){
+                // Certifica que o navio não passe dos limites do tabuleiro
+                if(inicioNavioY[i] + j < colunas){
+                    tabuleiro[inicioNavioX[i]][inicioNavioY[i] + j] = 3;
+                }
+            }
+        }
+
+        // Posicionamento do navio 3 no tabuleiro
+        if(i == 2){
+            for (int j = 0; j < 3; j++){
+                // Certifica que a coluna não passe dos limites do tabuleiro
+                if((inicioNavioY[i] + j < colunas) && (inicioNavioX[i] + j < linhas)){
+                    tabuleiro[inicioNavioX[i] + j][inicioNavioY[i] + j] = 3;
+                }
+            }
+        }
+
+
+        // Posicionamento do navio 4 no tabuleiro
+        if(i == 3){
+            for(int j = 0; j < 3; j++){
+                // Certifica que a coluna não passe dos linites do tabuleiro
+                if((inicioNavioY[i] + j < colunas) && (inicioNavioX[i] + j < linhas)){
+                    tabuleiro[inicioNavioX[i] + j][inicioNavioY[i] + j] = 3;
+                }
+            }
+        }
+
     }
 
-     // Coordenadas dos navios 
-    int x1 = 1; // Linha inicial navio 1
-    int x2 = 2; // Linha inicial navio 2 
-
-    printf("------------------ NAVIL 1 ------------------\n");
-    for(int i = 1, j = 1; i < 4; i++, j++){
-        printf("Parte %d do navio 1 posicionado na casa %d \n",
-        i, tabuleiro[x1][j]);
+    // Impressão do tabuleiro
+    for (int i = 0; i < linhas; i++){
+        for (int j = 0; j < colunas; j++){
+            printf("%d", tabuleiro[i][j]);
+        }
+    printf("\n");
     }
 
-    printf("------------------ NAVIL  ------------------\n");
-    for(int i = 1, j = 3; i < 4; i++){
-        printf("Parte %d do navio 2 posicionado na casa %d \n",
-        i, tabuleiro[x2][j]);
-        x2++;
-    }
-    
     return 0;
+
 }
