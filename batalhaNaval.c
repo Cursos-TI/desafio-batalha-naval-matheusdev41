@@ -1,80 +1,74 @@
 #include <stdio.h>
 
-#define linhas 10
-#define colunas 10
+#define LINHAS 10
+#define COLUNAS 10
 
 int main() {
+    
+    int tabuleiro[LINHAS][COLUNAS];
 
-    // Coordenadas navios
-    // Os dois primeiros navios são na horizontal
-    // Já os outros dois navios são na diagonal
-    int inicioNavioX[4] = {0, 2, 3, 4}; 
-    int inicioNavioY[4] = {2, 2, 1, 5};
-
-    // Declaração do tabuleiro 
-    int tabuleiro[linhas][colunas];
-
-    // Inicialização do tabuleiro com 0
-    for (int i = 0; i < linhas; i++){
-        for(int j = 0; j < colunas; j++){
+    // Inicializa o tabuleiro 10x10 com 0
+    for (int i = 0; i < LINHAS; i++){
+        for (int j = 0; j < COLUNAS; j++){
             tabuleiro[i][j] = 0;
-        }   
+        }
     }
 
-    // Posiciona navio1 horizontal
-    for (int i = 0; i < 4; i++) { // Percorre todo vetor inicioNavioX
+     // Coordenadas dos navios 
+     // Primeiro elemento do array é a coordenada da linha da matriz
+     // Segundo elemento do array é a coordenada da coluna da matriz
+    int navio1[2] = {4, 1};
+    int navio2[2] = {3, 5};
+    int navio3[2] = {0, 0};
+    int navio4[2] = {0, 5};
 
-        // Posicionamento do navio 1 no tabuleiro
-        if(i == 0){
-            for (int j = 0; j < 3; j++){
-                // Certifica que o navio não passe dos limites do tabuleiro
-                if(inicioNavioY[i] + j < colunas){
-                    tabuleiro[inicioNavioX[i]][inicioNavioY[i] + j] = 3;
-                }
-            }
+    // Posicionando navio1 - horizontal
+    for (int j = 0; j < 3; j++){ // Posiciona as 3 partes do navio
+    int x = navio1[0];
+    int y = navio1[1] + j;
+
+        if (y < COLUNAS && tabuleiro[x][y] != 3){ // Condição para garantir que não haja sobreposição e que não passe do limite do tabuleiro
+            tabuleiro[x][y] = 3; // Valor 3 atribuido ao indice x, y definidos no array navio1
         }
-
-        // Posicionamento do navio 2 no tabuleiro
-        if(i == 1){
-            for (int j = 0; j < 3; j++){
-                // Certifica que o navio não passe dos limites do tabuleiro
-                if(inicioNavioY[i] + j < colunas){
-                    tabuleiro[inicioNavioX[i]][inicioNavioY[i] + j] = 3;
-                }
-            }
-        }
-
-        // Posicionamento do navio 3 no tabuleiro
-        if(i == 2){
-            for (int j = 0; j < 3; j++){
-                // Certifica que o navio não passe dos limites do tabuleiro
-                if((inicioNavioY[i] + j < colunas) && (inicioNavioX[i] + j < linhas)){
-                    tabuleiro[inicioNavioX[i] + j][inicioNavioY[i] + j] = 3;
-                }
-            }
-        }
-
-
-        // Posicionamento do navio 4 no tabuleiro
-        if(i == 3){
-            for(int j = 0; j < 3; j++){
-                // Certifica que o navio não passe dos linites do tabuleiro
-                if((inicioNavioY[i] + j < colunas) && (inicioNavioX[i] + j < linhas)){
-                    tabuleiro[inicioNavioX[i] + j][inicioNavioY[i] + j] = 3;
-                }
-            }
-        }
-
     }
 
-    // Impressão do tabuleiro
-    for (int i = 0; i < linhas; i++){
-        for (int j = 0; j < colunas; j++){
-            printf("%d", tabuleiro[i][j]);
+    // Posicionando navio2 - vertical
+    for (int j = 0; j < 3; j++){
+        int x = navio2[0] + j;
+        int y = navio2[1];
+
+        if (x < LINHAS && tabuleiro[x][y] != 3){ // Condição para garantir que não haja sobreposição e que não passe do limite do tabuleiro
+            tabuleiro[x][y] = 3; // Valor 3 atribuido ao indice x, y definidos no array navio2
         }
-    printf("\n");
     }
+
+    // Posicionando navio3 - diagonal
+    for (int j = 0; j < 3; j++){
+        int x = navio3[0] + j;
+        int y = navio3[1] + j;
+
+        if ((x < LINHAS && y < COLUNAS) && (tabuleiro[x][y] != 3)){
+            tabuleiro[x][y] = 3;
+        }
+    }
+
+    // Posicionando navio4 - diagonal
+    for (int j = 0; j < 3; j++){
+        int x = navio4[0] + j;
+        int y = navio4[1] + j;
+
+        if((x < LINHAS && y < COLUNAS) && (tabuleiro[x][y] != 3)){
+            tabuleiro[x][y] = 3;
+        }
+    }
+    
+    // Impressão do tabuleiro final
+    for( int i = 0; i < 10; i++){
+        for( int j = 0; j < 10; j++){
+            printf("%d  ", tabuleiro[i][j]);
+        }
+        printf("\n");
+    } 
 
     return 0;
-
 }
