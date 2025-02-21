@@ -1,74 +1,117 @@
 #include <stdio.h>
 
+// Constantes para controle da matriz
 #define LINHAS 10
 #define COLUNAS 10
 
-int main() {
-    
+int main()
+{
+    // Definição do tabuleiro
     int tabuleiro[LINHAS][COLUNAS];
 
-    // Inicializa o tabuleiro 10x10 com 0
+    // Variáveis de controle das habilidades
+    int cone[2] = {0, 2}; // Início cone
+    int cruz[2] = {5, 2}; // Início cruz
+    int octaedro[2] = {7, 7}; // Início octaedro
+    
+
+    // Inicializa a matriz 10x10
     for (int i = 0; i < LINHAS; i++){
         for (int j = 0; j < COLUNAS; j++){
             tabuleiro[i][j] = 0;
         }
     }
 
-     // Coordenadas dos navios 
-     // Primeiro elemento do array é a coordenada da linha da matriz
-     // Segundo elemento do array é a coordenada da coluna da matriz
-    int navio1[2] = {4, 1};
-    int navio2[2] = {3, 5};
-    int navio3[2] = {0, 0};
-    int navio4[2] = {0, 5};
-
-    // Posicionando navio1 - horizontal
-    for (int j = 0; j < 3; j++){ // Posiciona as 3 partes do navio
-    int x = navio1[0];
-    int y = navio1[1] + j;
-
-        if (y < COLUNAS && tabuleiro[x][y] != 3){ // Condição para garantir que não haja sobreposição e que não passe do limite do tabuleiro
-            tabuleiro[x][y] = 3; // Valor 3 atribuido ao indice x, y definidos no array navio1
+    // Habilidade Cone
+    for (int j = 0; j < 3; j++){
+        int x = cone[0] + j; 
+        int y = cone[1] - j;
+    
+        if (x >= LINHAS || y < 0){ // Condição para evitar acesso fora da matriz
+            continue; 
         }
+
+        int largura = 1 + (2 * j); // Largura de cada linha do cone
+        int inicio = y;
+        int fim = y + largura - 1;
+
+        // Evita acesso fora do tabuleiro
+        if (inicio < 0){
+            inicio = 0;
+        }
+        if (fim >= COLUNAS) {
+            fim = COLUNAS - 1;
+        }
+
+        for (int n = inicio; n <= fim; n++){
+            tabuleiro[x][n] = 1;
+        }
+    
     }
 
-    // Posicionando navio2 - vertical
-    for (int j = 0; j < 3; j++){
-        int x = navio2[0] + j;
-        int y = navio2[1];
+    // Habilidade Cruz
+    for (int j = 0; j < 5; j++){
 
-        if (x < LINHAS && tabuleiro[x][y] != 3){ // Condição para garantir que não haja sobreposição e que não passe do limite do tabuleiro
-            tabuleiro[x][y] = 3; // Valor 3 atribuido ao indice x, y definidos no array navio2
+        // Posiciona a linha horizontal da cruz
+        int xLinha = cruz[0];
+        int yLinha = cruz[1] + j;
+        
+        // Condição para que a linha horizontal passe dos limites do tabuleiro
+        if (xLinha > LINHAS){ 
+            tabuleiro[xLinha][yLinha] = 0;
+        } else if (yLinha > COLUNAS){
+            tabuleiro[xLinha][yLinha] = 0;
         }
+
+        tabuleiro[xLinha][yLinha] = 1;
+
+        // Posiciona a linha vertical da cruz
+        for (int n = 0; n < 3; n++){
+            int xColuna = (cruz[0] - 1) + n;
+            int yColuna = cruz[1] + 2;
+
+            // Condição para que a linha vertical passe dos limites do tabuleiro
+            if (xColuna > LINHAS || yColuna > COLUNAS){
+                tabuleiro[xColuna][yColuna] = 0;
+            } 
+
+            tabuleiro[xColuna][yColuna] = 1;
+        } 
+
     }
-
-    // Posicionando navio3 - diagonal
+    // Habilidade Octaedro
     for (int j = 0; j < 3; j++){
-        int x = navio3[0] + j;
-        int y = navio3[1] + j;
 
-        if ((x < LINHAS && y < COLUNAS) && (tabuleiro[x][y] != 3)){
-            tabuleiro[x][y] = 3;
+        // Posiciona linha horizontal do octaedro
+        int xLinha = octaedro[0];
+        int yLinha = octaedro[1] + j;
+
+        // Condição para que a linha horizontal passe dos limites do tabuleiro
+        if(xLinha > LINHAS || yLinha > COLUNAS){
+           tabuleiro[xLinha][yLinha] = 0;
         }
-    }
 
-    // Posicionando navio4 - diagonal
-    for (int j = 0; j < 3; j++){
-        int x = navio4[0] + j;
-        int y = navio4[1] + j;
+        tabuleiro[xLinha][yLinha] = 1;
 
-        if((x < LINHAS && y < COLUNAS) && (tabuleiro[x][y] != 3)){
-            tabuleiro[x][y] = 3;
+        for (int n = 0; n < 3; n++){
+            int xColuna = (octaedro[0] - 1) + n;
+            int yColuna = octaedro[1] + 1;
+
+            // Condição para que a linha vertical passe dos limites do tabuleiro
+            if(xColuna > LINHAS || yColuna > COLUNAS){
+                tabuleiro[xColuna][yColuna] = 0;
+            } 
+
+            tabuleiro[xColuna][yColuna] = 1;
         }
     }
     
-    // Impressão do tabuleiro final
-    for( int i = 0; i < 10; i++){
-        for( int j = 0; j < 10; j++){
+    // Printa o tabuleiro
+    for (int i = 0; i < LINHAS; i ++){
+        for (int j = 0; j < COLUNAS; j++){
             printf("%d  ", tabuleiro[i][j]);
         }
         printf("\n");
-    } 
-
-    return 0;
+    }
+        return 0;
 }
